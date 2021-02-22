@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <title>Create New Product</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-default navbar-dark bg-dark">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Production Management System</a>
+        <!-- Toggle button -->
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+            <!-- Left links -->
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/staffs/new}">New Staffs</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/staffs}">View Staffs</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/products}">View Products</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/productCategory/new}">New Category</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/productCategory}">View Category</a></li>
+
+                <li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+
+
+<div class="container text-center">
+
+    <div sec:authorize="isAuthenticated()">
+        Welcome<b></b><span sec:authentication="name">Email</span><b>
+
+        <span sec:authentication="principal.authorities">Roles</span>
+
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout" />
+
+        </form>
+    </div>
+
+    <div th:if="${product.id == null}"><h3>Create New Product </h3></div>
+    <div th:unless="${product.id == null}"><h3>Edit Product</h3></div>
+
+
+    <form action="#" th:action="@{/product/save}" th:object="${product}" method="post"
+              style="max-width: 600px; margin: 0 auto;">
+
+        <input type="hidden" th:field="*{id}" th:value="${product.id}" />
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4">Product Name </label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{name}" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4">Product Maker </label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{maker}" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4">Aisle Location </label>
+                <div class="col-sm-8">
+                    <input type="text" th:field="*{aisle}" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4">Product Price </label>
+                <div class="col-sm-8">
+                    <input type="number" step="0.1" th:field="*{price}" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4">Product Category </label>
+                <div class="col-sm-8">
+                    <select th:field="*{category}" class="form-control" required>
+                        <th:block th:each="cat : ${listCategories}">
+                            <option th:text="${cat.name}" th:value="${cat.id}" />
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+
+
+            <th:block th:unless="${product.id == null}" th:each="detail, status : ${product.productDetails}">
+            <input type="hidden" name="detailId" th:value="${detail.id}" />
+            <div class="form-group row">
+                <label class="col-form-label col-sm-4">Details #[[${status.count}]] </label>
+                <div class="col-sm-4">
+                    <input type="text" name="detailName" th:value="${detail.name}" class="form-control" required />
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" name="detailValue" th:value="${detail.value}" class="form-control"  required />
+                </div>
+            </div>
+            </th:block>
+
+            <th:block th:if="${product.id == null}">
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-4">Details #1 </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="detailName" class="form-control" placeholder="Detail Name" required />
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" name="detailValue" class="form-control" placeholder="Product Value" required />
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-4">Details #2 </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="detailName" class="form-control" placeholder="Detail Name" required />
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" name="detailValue" class="form-control" placeholder="Product Value" required />
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-form-label col-sm-4">Details #3 </label>
+                    <div class="col-sm-4">
+                        <input type="text" name="detailName" class="form-control" placeholder="Detail Name" required />
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" name="detailValue" class="form-control" placeholder="Product Value" required />
+                    </div>
+                </div>
+            </th:block>
+
+
+            <div class="text-center p-3">
+                <button type="submit" class="btn btn-primary">Save Product</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

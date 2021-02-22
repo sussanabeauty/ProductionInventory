@@ -1,0 +1,7 @@
+This project implements the use of spring boot security, data jpa and web application.
+The project implements a role base spring security and uses authentication and authorization to
+allow access to perform specific task base on your role.
+Users or Staffs uses email and password to identify themselves to get access to their role.
+All collected date from the view page will be store inside a database using Hibernate jpa frameworks.
+
+Author: SUSSANA BEANUTY KWABI      Date: 02/15/2021

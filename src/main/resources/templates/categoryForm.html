@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <title>Create New Category</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-default navbar-dark bg-dark">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Production Management System</a>
+        <!-- Toggle button -->
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarCenteredExample">
+            <!-- Left links -->
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/staffs/new}">New Staffs</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/staffs}">View Staffs</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/product/new}">New Product</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/products}">View Products</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/productCategory}">View Product Categories</a></li>
+
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+
+
+    <div class="container text-center">
+
+        <div sec:authorize="isAuthenticated()">
+            Welcome <b><span sec:authentication="name">Email</span></b>
+           &nbsp;&nbsp;
+           <span sec:authentication="principal.authorities">Roles</span>
+
+            <form th:action="@{/logout}" method="post">
+                <input type="submit" value="Logout" />
+
+            </form>
+        </div>
+
+        <div><h3>Create New Category</h3></div>
+
+        <form action="#" th:action="@{/productCategory/save}" th:object="${category}" method="post"
+              style="max-width: 600px; margin: 0 auto;">
+
+            <table border="0" cellspacing="10">
+                <tr>
+                    <td>Category Name:</td>
+                    <td><input type="text" th:field="*{name}" /></td>
+                    <td colspan="2"><button type="submit">Save Category</button></td>
+                </tr>
+            </table>
+        </form>
+
+    </div>
+
+
+</body>
+</html>

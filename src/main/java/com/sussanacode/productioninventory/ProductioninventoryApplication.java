@@ -1,0 +1,13 @@
+package com.sussanacode.productioninventory;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ProductioninventoryApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(ProductioninventoryApplication.class, args);
+    }
+
+}

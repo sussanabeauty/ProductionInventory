@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+            xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"  >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Records - Product Management System</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link th:rel="stylesheet" th:href="@{assets/bootstrap4-toggle/bootstrap4-toggle.min.css}"/>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-default navbar-dark bg-dark">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Production Management System</a>
+        <!-- Toggle button -->
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <!-- Collapsible wrapper -->
+        <div class="navbar-collapse collapse" id="navbarNav">
+            <ul class="nav navbar-nav">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/staffs/new}">New Staffs</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/product/new}">New Product</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/products}">View Products</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/productCategory/new}">New Category</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/productCategory}">View Product Categories</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </div>
+        <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+
+
+
+<div class="container text-center">
+
+    <div><h1>Staff Records</h1></div>
+
+    <div>
+        <a th:href="@{/staffs/new}">Enter New Staff</a>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Staff ID</th>
+                    <th>Staff Full Name</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th sec:authorize="hasAnyAuthority('Admin', 'Supervisor')">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="staff : ${staffList}">
+                <tr>
+                    <td>[[${staff.id}]]</td>
+                    <td>[[${staff.fullname}]]</td>
+                    <td>[[${staff.email}]]</td>
+                    <td>[[${staff.roles}]]</td>
+                    <td sec:authorize="hasAnyAuthority('Admin', 'Supervisor')">
+                        <a th:href="@{'/staffs/edit/' + ${staff.id}}">Edit</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a sec:authorize="hasAuthority('Admin')" th:href="@{'/staffs/delete/' + ${staff.id}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{assets/bootstrap4-toggle/bootstrap4-toggle.min.js}"></script>
+</body>
+</html>

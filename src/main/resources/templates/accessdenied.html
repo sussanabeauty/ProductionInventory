@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <title>Access Denied</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-default navbar-dark bg-dark">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Production Management System</a>
+        <!-- Toggle button -->
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <!-- Left links -->
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/staffs/new}">New Staffs</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/staffs}">View Staffs</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/product/new}">New Product</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/products}">View Product</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/productCategory/new}">New Category</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/productCategory}">View Product Categories</a></li>
+
+                <li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+
+<div class="container text-center">
+    <div><h1>Authorization Access Denied Page</h1></div>
+
+    <div><h3>Sorry, you don't have permission to access this page!!</h3></div>
+
+</div>
+
+</body>
+</html>

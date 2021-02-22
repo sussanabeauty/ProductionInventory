@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+    <title>Inventory - Product Management System</title>
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-default navbar-dark bg-dark">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Production Management System</a>
+        <!-- Toggle button -->
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <!-- Left links -->
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/staffs/new}">New Staffs</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/staffs}">View Staffs</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/product/new}">New Product</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/productCategory/new}">New Category</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/productCategory}">View Product Categories</a></li>
+
+                <li class="nav-item"><a class="nav-link" th:href="@{/logout}">Logout</a></li>
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+
+
+
+
+
+<div class="container text-center">
+
+    <div sec:authorize="isAuthenticated()">
+        Welcome <b><span sec:authentication="name ">Email</span></b>
+
+        <span sec:authentication="principal.authorities">Roles</span>
+
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Logout" />
+
+        </form>
+    </div>
+
+    <div><h1>Product List </h1></div>
+
+    <div>
+        <a sec:authorize="hasAnyAuthority('Admin', 'Supervisor')" th:href="@{/product/new}">Create New Product</a>
+    </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Product Maker</th>
+                    <th>Aisle Location</th>
+                    <th>Price</th>
+                    <th>Product Category</th>
+                    <th>Product Details</th>
+                    <th sec:authorize="hasAnyAuthority('Admin', 'Supervisor')">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="product : ${productList}">
+                <tr>
+                    <td>[[${product.id}]]</td>
+                    <td>[[${product.name}]]</td>
+                    <td>[[${product.maker}]]</td>
+                    <td>[[${product.aisle}]]</td>
+                    <td>[[${product.price}]]</td>
+                    <td>[[${product.category.name}]]</td>
+                    <td>[[${product.productDetails}]]</td>
+                    <td sec:authorize="hasAnyAuthority('Admin', 'Supervisor')">
+                        <a th:href="@{'/products/edit/' + ${product.id}}">Edit</a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a sec:authorize="hasAuthority('Admin')" th:href="@{'/products/delete/' + ${product.id}}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>
